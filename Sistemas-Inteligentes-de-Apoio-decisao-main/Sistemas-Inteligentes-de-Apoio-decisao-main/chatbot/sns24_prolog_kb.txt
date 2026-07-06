@@ -1,0 +1,612 @@
+# Base de Conhecimento SNS24 — Regras de Triagem (Prolog + ML)
+# Gerado automaticamente a partir de backend/conhecimento.pl
+# ============================================================
+
+## SINTOMAS E PERGUNTAS DE TRIAGEM
+
+Cada sintoma abaixo corresponde a uma pergunta feita ao utente durante a triagem.
+A resposta é usada pelo motor de inferência para calcular o encaminhamento.
+
+Sintoma: emergencia
+  Pergunta: Tem alguma das seguintes situacoes: alteracao da consciencia, convulsao, engasgamento, falta de ar grave, dor no peito ou acidente recente?
+  Motivo clínico: Para despistar situacoes de risco de vida que exigem ativacao imediata do 112.
+
+Sintoma: sintomas_respiratorios
+  Pergunta: Tem algum sintoma respiratorio como falta de ar, tosse ou congestao nasal?
+  Motivo clínico: Para avaliar a presenca de infecao ou compromisso do sistema respiratorio.
+
+Sintoma: problema_garganta
+  Pergunta: Tem algum problema na garganta?
+  Motivo clínico: Para identificar possiveis inflamacoes ou infecoes nas vias aereas superiores.
+
+Sintoma: dormir_sentado
+  Pergunta: Tem de dormir sentado ou tem cansaco grave em atividades do dia-a-dia?
+  Motivo clínico: Para avaliar a gravidade da dificuldade respiratoria - criterio de urgencia.
+
+Sintoma: tosse_sangue
+  Pergunta: Tem tosse com saida de sangue vivo?
+  Motivo clínico: Hemoptise e um sinal de alarme vermelho que implica considerar urgencia hospitalar.
+
+Sintoma: febre
+  Pergunta: Tem temperatura igual ou superior a 37,8 graus?
+  Motivo clínico: A febre e um indicador chave de processo infecioso ou inflamatorio em curso.
+
+Sintoma: pieira
+  Pergunta: Tem pieira (som tipo apito) ao respirar?
+  Motivo clínico: Para detetar obstrucao das vias aereas inferiores, como numa crise de asma.
+
+Sintoma: inalador_sem_melhoria
+  Pergunta: Fez tratamento com inalador e nao melhorou?
+  Motivo clínico: Para perceber se a crise respiratoria e resistente ao tratamento habitual.
+
+Sintoma: pieira_intensa
+  Pergunta: A pieira impede-o de fazer a sua vida normal?
+  Motivo clínico: Para medir o impacto funcional da falta de ar e determinar o nivel de urgencia.
+
+Sintoma: febre_nao_cede
+  Pergunta: Tomou medicamento para a febre ha mais de 2h e a febre continua?
+  Motivo clínico: Febre resistente a medicacao sugere quadro clinico que necessita de avaliacao medica.
+
+Sintoma: imunossuprimido
+  Pergunta: E doente imunossuprimido (ex: quimioterapia)?
+  Motivo clínico: Doentes imunodeprimidos tem risco muito maior de complicacoes severas.
+
+Sintoma: gastricos_prolongados
+  Pergunta: Tem vomitos ou diarreia ha mais de 12 horas?
+  Motivo clínico: Para detetar risco de desidratacao grave por perda prolongada de liquidos.
+
+Sintoma: sinais_desidratacao
+  Pergunta: Tem urina reduzida, lingua seca ou tonturas?
+  Motivo clínico: Desidratacao grave e emergencia medica que frequentemente necessita de fluidoterapia IV.
+
+Sintoma: febre_3_dias
+  Pergunta: Tem febre ha mais de 3 dias completos?
+  Motivo clínico: Febre prolongada pode indicar infecao bacteriana secundaria ou agravamento do quadro.
+
+Sintoma: doencas_cronicas
+  Pergunta: Tem mais de 60 anos ou doencas cronicas (Diabetes, Asma, etc.)?
+  Motivo clínico: Pessoas idosas ou com doencas cronicas sao grupo de risco para descompensacao.
+
+Sintoma: sintomas_gripais
+  Pergunta: Tem corrimento nasal ou dores nos musculos?
+  Motivo clínico: Para identificar quadros virais comuns de baixo risco.
+
+Sintoma: olfato_paladar
+  Pergunta: Apresenta alteracao do olfato ou do paladar?
+  Motivo clínico: Sintoma associado a infecoes virais especificas, ajudando a definir o isolamento.
+
+Sintoma: dor_peito_irradiada
+  Pergunta: Sente dor no peito que se espalha para o braco esquerdo, costas ou maxilar?
+  Motivo clínico: Dor irradiada no peito e o principal sinal de alarme para enfarte do miocardio.
+
+Sintoma: assimetria_facial_fala
+  Pergunta: Tem a boca torta, dificuldade em falar ou falta de forca num dos bracos?
+  Motivo clínico: Sao os sinais da Via Verde AVC que exige socorro imediato.
+
+Sintoma: dor_abdominal_intensa
+  Pergunta: Tem uma dor de barriga muito forte, subita e que nao passa?
+  Motivo clínico: Dor abdominal subita e intensa pode indicar apendicite, ulcera ou problema cirurgico urgente.
+
+Sintoma: traumatismo_craniano
+  Pergunta: Bateu com a cabeca recentemente e sente tonturas, vomitos ou confusao?
+  Motivo clínico: Bater com a cabeca e ter vomitos ou confusao indica possivel lesao cerebral.
+
+Sintoma: inchaco_face_labios
+  Pergunta: Sente a cara, labios ou lingua a inchar rapidamente?
+  Motivo clínico: Inchacao no rosto ou lingua pode bloquear a respiracao numa reacao alergica (anafilaxia).
+
+Sintoma: ansiedade_extrema
+  Pergunta: Sente uma ansiedade incontrolavel, ataque de panico ou tristeza profunda?
+  Motivo clínico: O SNS24 tem linha especializada em apoio psicologico para crises de saude mental.
+
+Sintoma: cianose
+  Pergunta: Tem os labios ou pontas dos dedos azulados ou cinzentos?
+  Motivo clínico: Labios ou dedos azulados indicam falta grave de oxigenio nos tecidos.
+
+Sintoma: saturacao_baixa
+  Pergunta: Tem oximetro e a saturacao de oxigenio esta abaixo de 92%?
+  Motivo clínico: Saturacao abaixo de 92% indica hipoxia grave que requer suporte de oxigenio urgente.
+
+Sintoma: dor_peito_repouso
+  Pergunta: Tem dor no peito mesmo em repouso, sem irradiacao?
+  Motivo clínico: Dor toracica em repouso pode indicar sindrome coronaria aguda.
+
+Sintoma: palpitacoes_graves
+  Pergunta: Sente o coracao a bater muito rapido, irregular ou tem sensacao de paragem?
+  Motivo clínico: Palpitacoes intensas podem indicar arritmia com risco de paragem cardiaca.
+
+Sintoma: edema_membros
+  Pergunta: Tem os tornozelos, pes ou pernas muito inchados?
+  Motivo clínico: Inchaco nos membros com dispneia pode indicar descompensacao cardiaca.
+
+Sintoma: tosse_cronica
+  Pergunta: Tem tosse persistente ha mais de 3 semanas?
+  Motivo clínico: Tosse persistente mais de 3 semanas requer exclusao de tuberculose ou neoplasia.
+
+Sintoma: expectoracao_purulenta
+  Pergunta: A tosse tem expetoracoes de cor amarela ou verde?
+  Motivo clínico: Expectoracao purulenta indica infecao bacteriana que pode necessitar antibiotico.
+
+Sintoma: estridor
+  Pergunta: Ouve um som agudo e aspero ao inspirar (estridor)?
+  Motivo clínico: Estridor indica obstrucao das vias aereas superiores - pode ser fatal se nao tratado.
+
+Sintoma: nauseas
+  Pergunta: Tem nauseas ou sensacao de enjoo?
+  Motivo clínico: Para avaliar se as nauseas estao associadas a outros sinais de alarme digestivo.
+
+Sintoma: vomitos_sangue
+  Pergunta: Vomitou sangue ou liquido com aspeto de borra de cafe?
+  Motivo clínico: Vomito com sangue indica hemorragia digestiva alta - emergencia cirurgica.
+
+Sintoma: fezes_escuras
+  Pergunta: As suas fezes sao pretas, alcatroadas ou com sangue visivel?
+  Motivo clínico: Fezes pretas ou com sangue indicam hemorragia digestiva que requer avaliacao urgente.
+
+Sintoma: dor_abdominal_localizada
+  Pergunta: A dor de barriga e mais intensa do lado direito inferior (zona do apendice)?
+  Motivo clínico: Dor no quadrante inferior direito e o principal sinal de apendicite.
+
+Sintoma: ictericia
+  Pergunta: Tem a pele ou os olhos amarelados?
+  Motivo clínico: Pele ou olhos amarelados indicam problema hepatico, biliar ou hemolitico a investigar.
+
+Sintoma: rigidez_nuca
+  Pergunta: Tem dor ou rigidez intensa no pescoco ao tentar baixar o queixo ao peito?
+  Motivo clínico: Rigidez da nuca com febre e sinal classico de meningite - emergencia neurologica.
+
+Sintoma: cefaleia_subita
+  Pergunta: Teve uma dor de cabeca muito forte e subita, a pior da sua vida?
+  Motivo clínico: Cefaleia subita e extrema pode indicar hemorragia subaracnoideia - emergencia.
+
+Sintoma: confusao_mental
+  Pergunta: Esta confuso, desorientado ou nao reconhece pessoas ou lugares?
+  Motivo clínico: Confusao repentina pode indicar AVC, sepsis, hipoglicemia ou outro estado critico.
+
+Sintoma: fraqueza_unilateral
+  Pergunta: Tem fraqueza ou dormencia repentina num lado do corpo?
+  Motivo clínico: Fraqueza num lado do corpo e sinal classico de AVC - cada minuto conta.
+
+Sintoma: dor_costas_irradiada
+  Pergunta: Tem dor nas costas que irradia para a perna (tipo choque eletrico)?
+  Motivo clínico: Dor que irradia para a perna indica compressao de nervo espinal.
+
+Sintoma: urina_sangue
+  Pergunta: A sua urina esta vermelha ou com sangue visivel?
+  Motivo clínico: Sangue na urina pode indicar litiase, infecao grave ou neoplasia urologica.
+
+Sintoma: dor_flanco
+  Pergunta: Tem dor muito intensa na zona lombar lateral (rim)?
+  Motivo clínico: Dor intensa no flanco e tipica de colica renal ou pielonefrite.
+
+Sintoma: erupcao_purpura
+  Pergunta: Tem manchas na pele de cor roxa que nao desaparecem ao pressionar?
+  Motivo clínico: Manchas purpuricas que nao desaparecem sao sinal de meningococcemia - emergencia.
+
+Sintoma: dor_articular
+  Pergunta: Tem dor, inchaço ou calor numa ou varias articulacoes?
+  Motivo clínico: Para avaliar a causa da dor articular e excluir artrite septica ou doenca reumatologica.
+
+Sintoma: artrite_aguda
+  Pergunta: A articulacao esta muito inchada, vermelha e quente, com dor intensa ao toque?
+  Motivo clínico: Articulacao inflamada com febre pode indicar artrite septica - emergencia ortopedica.
+
+Sintoma: olho_vermelho_dor
+  Pergunta: Tem o olho muito vermelho com dor intensa e visao turva?
+  Motivo clínico: Olho vermelho com dor e visao turva pode indicar glaucoma agudo - emergencia oftalmologica.
+
+Sintoma: gravidez
+  Pergunta: Esta gravida?
+  Motivo clínico: A gravidez altera os parametros normais e aumenta o risco de algumas complicacoes.
+
+Sintoma: gravidez_sangramento
+  Pergunta: Esta gravida e tem sangramento vaginal?
+  Motivo clínico: Sangramento na gravidez pode indicar ameaca de aborto ou placenta previa.
+
+Sintoma: gravidez_dor
+  Pergunta: Esta gravida e tem dores abdominais intensas ou contracoes regulares?
+  Motivo clínico: Dor abdominal na gravidez pode indicar trabalho de parto prematuro ou descolamento.
+
+Sintoma: hipoglicemia
+  Pergunta: Sente tremores, suores frios, confusao ou fraqueza extrema (possivel descida de acucar)?
+  Motivo clínico: Descida de acucar no sangue pode levar a perda de consciencia se nao tratada.
+
+Sintoma: infecao_urinaria
+  Pergunta: Tem ardor ao urinar, necessidade urgente e frequente de urinar?
+  Motivo clínico: Sintomas tipicos de ITU que pode necessitar de antibiotico.
+
+Sintoma: infecao_urinaria_febre
+  Pergunta: Para alem dos sintomas urinarios, tem febre e dor nas costas?
+  Motivo clínico: Febre associada a ITU sugere extensao ao rim - pielonefrite a tratar.
+
+Sintoma: crianca_febril
+  Pergunta: A crianca tem menos de 3 meses e tem febre acima de 38 graus?
+  Motivo clínico: Bebes com menos de 3 meses e febre tem sistema imunitario imaturo - risco elevado.
+
+Sintoma: mordedura_animal
+  Pergunta: Foi mordido por um animal (cao, gato, animal selvagem)?
+  Motivo clínico: Mordeduras podem transmitir raiva e tetano - profilaxia urgente necessaria.
+
+Sintoma: dor_dental_intensa
+  Pergunta: Tem dor de dentes muito intensa com inchaço na face ou febre?
+  Motivo clínico: Dor dental com inchaco pode indicar abcesso que pode evoluir para celulite facial.
+
+Sintoma: dor_garganta_intensa
+  Pergunta: A dor de garganta e tao forte que nao consegue engolir liquidos?
+  Motivo clínico: Dor impeditiva de engolir pode indicar abcesso periamigdalino - complicacao grave.
+
+Sintoma: garganta_exsudados
+  Pergunta: Tem manchas brancas ou pus visivel na garganta?
+  Motivo clínico: Pus na garganta com febre sugere amigdalite bacteriana que necessita antibiotico.
+
+---
+
+## ENCAMINHAMENTOS POSSÍVEIS
+
+### EMERGÊNCIA 112
+  Ligar 112 imediatamente. Situação de risco de vida.
+
+### URGÊNCIA HOSPITALAR
+  Ir ao Serviço de Urgência Hospitalar nas próximas 2 horas.
+
+### CONSULTA MÉDICA
+  Marcar consulta com médico de família em 24 a 48 horas.
+
+### CONTACTO SNS24
+  Contactar a linha SNS24 (808 24 24 24) para aconselhamento.
+
+### LINHA SAÚDE MENTAL
+  Contactar a linha de apoio psicológico do SNS24.
+
+### AUTOCUIDADOS COM VIGILÂNCIA
+  Tratar em casa com vigilância. Reavaliação em 24 a 48 horas.
+
+### AUTOCUIDADOS
+  Tratar em casa. Sem necessidade de contacto imediato com serviços de saúde.
+
+---
+
+## REGRAS DE TRIAGEM MANUAIS (Parte A)
+
+Estas regras foram definidas manualmente com base em protocolos clínicos SNS24.
+
+Encaminhamento: EMERGÊNCIA 112
+  Justificação: Presenca de sinais de emergencia vital (alteracao da consciencia, convulsao, engasgamento, etc.).
+  Sintomas presentes: emergencia
+  Grau de certeza da regra: 100%
+
+Encaminhamento: EMERGÊNCIA 112
+  Justificação: Sinais de alerta para Acidente Vascular Cerebral (AVC) - Via Verde.
+  Sintomas presentes: assimetria_facial_fala
+  Grau de certeza da regra: 100%
+
+Encaminhamento: EMERGÊNCIA 112
+  Justificação: Sinais suspeitos de Enfarte do Miocardio - dor irradiada.
+  Sintomas presentes: dor_peito_irradiada
+  Grau de certeza da regra: 100%
+
+Encaminhamento: EMERGÊNCIA 112
+  Justificação: Cianose (labios ou dedos azulados) - sinal de hipoxia grave.
+  Sintomas presentes: cianose
+  Grau de certeza da regra: 100%
+
+Encaminhamento: EMERGÊNCIA 112
+  Justificação: Saturacao de oxigenio abaixo de 92% - hipoxia grave.
+  Sintomas presentes: saturacao_baixa
+  Grau de certeza da regra: 100%
+
+Encaminhamento: EMERGÊNCIA 112
+  Justificação: Cefaleia subita e extrema - suspeita de hemorragia subaracnoideia.
+  Sintomas presentes: cefaleia_subita
+  Grau de certeza da regra: 100%
+
+Encaminhamento: EMERGÊNCIA 112
+  Justificação: Triada de meningite: rigidez da nuca, confusao e febre - emergencia neurologica.
+  Sintomas presentes: rigidez_nuca, confusao_mental, febre
+  Grau de certeza da regra: 100%
+
+Encaminhamento: EMERGÊNCIA 112
+  Justificação: Erupcao purpurica que nao desaparece - suspeita de meningococcemia.
+  Sintomas presentes: erupcao_purpura
+  Grau de certeza da regra: 100%
+
+Encaminhamento: EMERGÊNCIA 112
+  Justificação: Bebe com menos de 3 meses e febre - emergencia pediatrica.
+  Sintomas presentes: crianca_febril
+  Grau de certeza da regra: 100%
+
+Encaminhamento: EMERGÊNCIA 112
+  Justificação: Vomito com sangue - hemorragia digestiva alta.
+  Sintomas presentes: vomitos_sangue
+  Grau de certeza da regra: 100%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Dificuldade respiratoria grave - necessidade de dormir sentado ou cansaco extremo.
+  Sintomas presentes: sintomas_respiratorios, dormir_sentado
+  Sintomas ausentes: emergencia
+  Grau de certeza da regra: 95%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Tosse com sangue (hemoptise) - sinal de alarme que requer avaliacao hospitalar.
+  Sintomas presentes: sintomas_respiratorios, tosse_sangue
+  Sintomas ausentes: emergencia, dormir_sentado
+  Grau de certeza da regra: 95%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Crise respiratoria com febre e pieira que nao melhora com inalador.
+  Sintomas presentes: sintomas_respiratorios, febre, pieira, inalador_sem_melhoria
+  Grau de certeza da regra: 90%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Pieira intensa que impede as atividades normais.
+  Sintomas presentes: pieira, pieira_intensa
+  Sintomas ausentes: inalador_sem_melhoria
+  Grau de certeza da regra: 90%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Doente imunossuprimido com febre - risco elevado de infecao grave.
+  Sintomas presentes: febre, imunossuprimido
+  Grau de certeza da regra: 90%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Desidratacao grave com vomitos/diarreia prolongados.
+  Sintomas presentes: gastricos_prolongados, sinais_desidratacao
+  Grau de certeza da regra: 90%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Suspeita de anafilaxia com inchacao da face e dificuldade respiratoria.
+  Sintomas presentes: inchaco_face_labios, sintomas_respiratorios
+  Grau de certeza da regra: 98%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Traumatismo craniano com sinais de alarme neurologico.
+  Sintomas presentes: traumatismo_craniano
+  Grau de certeza da regra: 95%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Dor abdominal intensa e subita - suspeita de abdomen agudo.
+  Sintomas presentes: dor_abdominal_intensa
+  Grau de certeza da regra: 90%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Dor localizada no quadrante inferior direito - suspeita de apendicite.
+  Sintomas presentes: dor_abdominal_localizada, febre
+  Grau de certeza da regra: 92%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Estridor inspiratorio - obstrucao das vias aereas superiores.
+  Sintomas presentes: estridor
+  Grau de certeza da regra: 95%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Palpitacoes graves com falta de ar - possivel arritmia com instabilidade.
+  Sintomas presentes: palpitacoes_graves, sintomas_respiratorios
+  Grau de certeza da regra: 92%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Dor no peito em repouso - sindrome coronaria a excluir.
+  Sintomas presentes: dor_peito_repouso
+  Sintomas ausentes: dor_peito_irradiada
+  Grau de certeza da regra: 88%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Dor no flanco com febre - suspeita de pielonefrite ou colica renal complicada.
+  Sintomas presentes: dor_flanco, febre
+  Grau de certeza da regra: 88%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Articulacao inflamada com febre - suspeita de artrite septica.
+  Sintomas presentes: artrite_aguda, febre
+  Grau de certeza da regra: 90%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Olho vermelho com dor intensa e visao turva - glaucoma agudo a excluir.
+  Sintomas presentes: olho_vermelho_dor
+  Grau de certeza da regra: 88%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Gravida com dor abdominal intensa ou contracoes prematuras.
+  Sintomas presentes: gravidez, gravidez_dor
+  Grau de certeza da regra: 95%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Gravida com sangramento vaginal - avaliacao obstetrica urgente.
+  Sintomas presentes: gravidez, gravidez_sangramento
+  Grau de certeza da regra: 90%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Sangue na urina com dor intensa - litiase renal ou patologia urologica urgente.
+  Sintomas presentes: urina_sangue, dor_flanco
+  Grau de certeza da regra: 88%
+
+Encaminhamento: URGÊNCIA HOSPITALAR
+  Justificação: Mordedura de animal com febre - risco de raiva e tetano.
+  Sintomas presentes: mordedura_animal, febre
+  Grau de certeza da regra: 88%
+
+Encaminhamento: CONSULTA MÉDICA
+  Justificação: Febre que nao baixa com medicacao - avaliacao medica necessaria.
+  Sintomas presentes: febre, febre_nao_cede
+  Grau de certeza da regra: 80%
+
+Encaminhamento: CONSULTA MÉDICA
+  Justificação: Tosse prolongada com expectoracao purulenta - possivel infecao bacteriana.
+  Sintomas presentes: tosse_cronica, expectoracao_purulenta
+  Grau de certeza da regra: 80%
+
+Encaminhamento: CONSULTA MÉDICA
+  Justificação: Garganta com pus e febre - amigdalite bacteriana requer antibiotico.
+  Sintomas presentes: garganta_exsudados, febre
+  Grau de certeza da regra: 80%
+
+Encaminhamento: CONSULTA MÉDICA
+  Justificação: Sintomas urinarios com febre - pielonefrite a tratar com antibiotico.
+  Sintomas presentes: infecao_urinaria, infecao_urinaria_febre
+  Grau de certeza da regra: 80%
+
+Encaminhamento: CONSULTA MÉDICA
+  Justificação: Abcesso dentario com febre - celulite facial a tratar.
+  Sintomas presentes: dor_dental_intensa, febre
+  Grau de certeza da regra: 78%
+
+Encaminhamento: CONSULTA MÉDICA
+  Justificação: Dor articular sem sinais inflamatorios intensos - avaliacao reumatologica.
+  Sintomas presentes: dor_articular
+  Sintomas ausentes: artrite_aguda, febre
+  Grau de certeza da regra: 75%
+
+Encaminhamento: CONSULTA MÉDICA
+  Justificação: Dor lombociatica sem perda de forca - hernia discal a tratar conservadoramente.
+  Sintomas presentes: dor_costas_irradiada
+  Sintomas ausentes: fraqueza_unilateral
+  Grau de certeza da regra: 75%
+
+Encaminhamento: CONTACTO SNS24
+  Justificação: Febre ha mais de 3 dias com sintomas gastricos, sem desidratacao grave.
+  Sintomas presentes: gastricos_prolongados, febre_3_dias
+  Sintomas ausentes: sinais_desidratacao
+  Grau de certeza da regra: 75%
+
+Encaminhamento: CONTACTO SNS24
+  Justificação: Paciente com mais de 60 anos ou doencas cronicas com febre.
+  Sintomas presentes: febre, doencas_cronicas
+  Grau de certeza da regra: 75%
+
+Encaminhamento: CONTACTO SNS24
+  Justificação: Sintomas de infecao urinaria sem febre - pode necessitar de antibiotico.
+  Sintomas presentes: infecao_urinaria
+  Sintomas ausentes: infecao_urinaria_febre
+  Grau de certeza da regra: 72%
+
+Encaminhamento: CONTACTO SNS24
+  Justificação: Sintomas gripais com febre em doente cronico - aconselhamento medico.
+  Sintomas presentes: sintomas_gripais, febre, doencas_cronicas
+  Grau de certeza da regra: 72%
+
+Encaminhamento: CONTACTO SNS24
+  Justificação: Possivel hipoglicemia ligeira - aconselhamento para gestao da glicemia.
+  Sintomas presentes: hipoglicemia
+  Sintomas ausentes: confusao_mental
+  Grau de certeza da regra: 70%
+
+Encaminhamento: LINHA SAÚDE MENTAL
+  Justificação: Crise de ansiedade ou panico - encaminhamento para apoio psicologico SNS24.
+  Sintomas presentes: ansiedade_extrema
+  Sintomas ausentes: dor_peito_irradiada
+  Grau de certeza da regra: 85%
+
+Encaminhamento: AUTOCUIDADOS COM VIGILÂNCIA
+  Justificação: Alteracao do olfato ou paladar - possivel infecao viral, vigiar evolucao.
+  Sintomas presentes: olfato_paladar
+  Grau de certeza da regra: 70%
+
+Encaminhamento: AUTOCUIDADOS COM VIGILÂNCIA
+  Justificação: Sintomas respiratorios com febre sem sinais de alarme - vigilancia em casa.
+  Sintomas presentes: sintomas_respiratorios, febre
+  Sintomas ausentes: emergencia, olfato_paladar
+  Grau de certeza da regra: 60%
+
+Encaminhamento: AUTOCUIDADOS COM VIGILÂNCIA
+  Justificação: Sintomas gripais leves sem febre - repouso e hidratacao, vigiar evolucao.
+  Sintomas presentes: sintomas_gripais
+  Sintomas ausentes: febre
+  Grau de certeza da regra: 60%
+
+Encaminhamento: AUTOCUIDADOS
+  Justificação: Ausencia de sintomas de emergencia, respiratorios ou de garganta.
+  Sintomas ausentes: emergencia, sintomas_respiratorios, problema_garganta
+  Grau de certeza da regra: 50%
+
+---
+
+## REGRAS DE TRIAGEM GERADAS POR MACHINE LEARNING (Parte B)
+
+Estas regras foram aprendidas automaticamente por uma Árvore de Decisão
+treinada no dataset de triagens reais. Complementam as regras manuais.
+
+### EMERGÊNCIA 112 (17 regras ML)
+  - Padrão: emergencia presentes → EMERGÊNCIA 112
+  - Padrão: cefaleia_subita presentes → EMERGÊNCIA 112
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, doencas_cronicas, sintomas_gripais, assimetria_facial_fala)
+  - Padrão: assimetria_facial_fala presentes → EMERGÊNCIA 112
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, doencas_cronicas, sintomas_gripais)
+  - Padrão: vomitos_sangue presentes → EMERGÊNCIA 112
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, doencas_cronicas, sintomas_gripais, assimetria_facial_fala, cefaleia_subita)
+  - Padrão: crianca_febril presentes → EMERGÊNCIA 112
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, doencas_cronicas, sintomas_gripais, assimetria_facial_fala, cefaleia_subita, vomitos_sangue)
+  ... e mais 12 padrões aprendidos.
+
+### URGÊNCIA HOSPITALAR (22 regras ML)
+  - Padrão: sintomas_respiratorios, pieira presentes → URGÊNCIA HOSPITALAR
+    (ausentes: emergencia, ansiedade_extrema, cianose, febre)
+  - Padrão: gravidez_dor presentes → URGÊNCIA HOSPITALAR
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, doencas_cronicas, sintomas_gripais, assimetria_facial_fala, cefaleia_subita, vomitos_sangue, crianca_febril, saturacao_baixa, febre_3_dias, hipoglicemia, cianose, erupcao_purpura, expectoracao_purulenta)
+  - Padrão: sintomas_respiratorios, pieira, febre, inalador_sem_melhoria presentes → URGÊNCIA HOSPITALAR
+    (ausentes: emergencia, ansiedade_extrema, cianose)
+  - Padrão: febre, imunossuprimido presentes → URGÊNCIA HOSPITALAR
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre_nao_cede, doencas_cronicas, febre_3_dias, confusao_mental, olfato_paladar, crianca_febril, garganta_exsudados, infecao_urinaria, dor_abdominal_localizada, infecao_urinaria_febre)
+  - Padrão: sintomas_respiratorios, palpitacoes_graves presentes → URGÊNCIA HOSPITALAR
+    (ausentes: emergencia, ansiedade_extrema, cianose, pieira, febre, olfato_paladar, tosse_cronica, pieira_intensa)
+  ... e mais 17 padrões aprendidos.
+
+### CONSULTA MÉDICA (14 regras ML)
+  - Padrão: febre, febre_nao_cede presentes → CONSULTA MÉDICA
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, problema_garganta)
+  - Padrão: infecao_urinaria, infecao_urinaria_febre presentes → CONSULTA MÉDICA
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, doencas_cronicas)
+  - Padrão: expectoracao_purulenta, tosse_cronica presentes → CONSULTA MÉDICA
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, doencas_cronicas, sintomas_gripais, assimetria_facial_fala, cefaleia_subita, vomitos_sangue, crianca_febril, saturacao_baixa, febre_3_dias, hipoglicemia, cianose, erupcao_purpura)
+  - Padrão: dor_articular, dor_costas_irradiada presentes → CONSULTA MÉDICA
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, doencas_cronicas, sintomas_gripais, assimetria_facial_fala, cefaleia_subita, vomitos_sangue, crianca_febril, saturacao_baixa, febre_3_dias, hipoglicemia, cianose, erupcao_purpura, expectoracao_purulenta, gravidez_dor)
+  - Padrão: febre, doencas_cronicas, garganta_exsudados presentes → CONSULTA MÉDICA
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre_nao_cede)
+  ... e mais 9 padrões aprendidos.
+
+### CONTACTO SNS24 (22 regras ML)
+  - Padrão: febre, doencas_cronicas, sintomas_gripais presentes → CONTACTO SNS24
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre_nao_cede, garganta_exsudados, dor_abdominal_localizada, nauseas)
+  - Padrão: febre, doencas_cronicas, problema_garganta presentes → CONTACTO SNS24
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre_nao_cede, garganta_exsudados, dor_abdominal_localizada, nauseas, sintomas_gripais)
+  - Padrão: febre, doencas_cronicas, infecao_urinaria_febre presentes → CONTACTO SNS24
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre_nao_cede, garganta_exsudados, dor_abdominal_localizada, nauseas, sintomas_gripais, problema_garganta)
+  - Padrão: infecao_urinaria, gastricos_prolongados presentes → CONTACTO SNS24
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria_febre, dor_dental_intensa)
+  - Padrão: febre, doencas_cronicas, gastricos_prolongados presentes → CONTACTO SNS24
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre_nao_cede, garganta_exsudados, dor_abdominal_localizada, nauseas, sintomas_gripais, problema_garganta, infecao_urinaria_febre, ictericia, febre_3_dias, infecao_urinaria, sinais_desidratacao)
+  ... e mais 17 padrões aprendidos.
+
+### LINHA SAÚDE MENTAL (4 regras ML)
+  - Padrão: ansiedade_extrema presentes → LINHA SAÚDE MENTAL
+    (ausentes: emergencia, dor_peito_irradiada, febre, hipoglicemia, dor_articular, olho_vermelho_dor, gravidez)
+  - Padrão: ansiedade_extrema, gravidez presentes → LINHA SAÚDE MENTAL
+    (ausentes: emergencia, dor_peito_irradiada, febre, hipoglicemia, dor_articular, olho_vermelho_dor, rigidez_nuca, artrite_aguda)
+  - Padrão: ansiedade_extrema, gravidez, artrite_aguda presentes → LINHA SAÚDE MENTAL
+    (ausentes: emergencia, dor_peito_irradiada, febre, hipoglicemia, dor_articular, olho_vermelho_dor, rigidez_nuca)
+  - Padrão: ansiedade_extrema, gravidez, rigidez_nuca presentes → LINHA SAÚDE MENTAL
+    (ausentes: emergencia, dor_peito_irradiada, febre, hipoglicemia, dor_articular, olho_vermelho_dor)
+
+### AUTOCUIDADOS COM VIGILÂNCIA (13 regras ML)
+  - Padrão: sintomas_gripais presentes → AUTOCUIDADOS COM VIGILÂNCIA
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, doencas_cronicas, olfato_paladar, pieira)
+  - Padrão: sintomas_respiratorios, febre, inalador_sem_melhoria presentes → AUTOCUIDADOS COM VIGILÂNCIA
+    (ausentes: emergencia, ansiedade_extrema, cianose, pieira, doencas_cronicas, dormir_sentado)
+  - Padrão: febre, olfato_paladar presentes → AUTOCUIDADOS COM VIGILÂNCIA
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre_nao_cede, doencas_cronicas, febre_3_dias, confusao_mental)
+  - Padrão: sintomas_respiratorios, pieira, febre presentes → AUTOCUIDADOS COM VIGILÂNCIA
+    (ausentes: emergencia, ansiedade_extrema, cianose, inalador_sem_melhoria, dormir_sentado, sintomas_gripais)
+  - Padrão: sintomas_respiratorios, febre, sintomas_gripais presentes → AUTOCUIDADOS COM VIGILÂNCIA
+    (ausentes: emergencia, ansiedade_extrema, cianose, pieira, doencas_cronicas, dormir_sentado, inalador_sem_melhoria, tosse_cronica)
+  ... e mais 8 padrões aprendidos.
+
+### AUTOCUIDADOS (10 regras ML)
+  - Padrão: doencas_cronicas, nauseas presentes → AUTOCUIDADOS
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, crianca_febril, expectoracao_purulenta, sintomas_gripais, fraqueza_unilateral, dor_flanco, tosse_sangue, infecao_urinaria_febre, garganta_exsudados, urina_sangue, edema_membros, confusao_mental, gravidez)
+  - Padrão: doencas_cronicas, pieira presentes → AUTOCUIDADOS
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, crianca_febril, expectoracao_purulenta, sintomas_gripais, fraqueza_unilateral, dor_flanco, tosse_sangue, infecao_urinaria_febre, garganta_exsudados, urina_sangue, edema_membros, confusao_mental, gravidez, nauseas)
+  - Padrão: doencas_cronicas presentes → AUTOCUIDADOS
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, crianca_febril, expectoracao_purulenta, sintomas_gripais, fraqueza_unilateral, dor_flanco, tosse_sangue, infecao_urinaria_febre, garganta_exsudados, urina_sangue, edema_membros, confusao_mental, gravidez, nauseas, pieira)
+  - Padrão: doencas_cronicas, gravidez presentes → AUTOCUIDADOS
+    (ausentes: emergencia, ansiedade_extrema, sintomas_respiratorios, febre, infecao_urinaria, crianca_febril, expectoracao_purulenta, sintomas_gripais, fraqueza_unilateral, dor_flanco, tosse_sangue, infecao_urinaria_febre, garganta_exsudados, urina_sangue, edema_membros, confusao_mental)
+  - Padrão: sintomas_respiratorios presentes → AUTOCUIDADOS
+    (ausentes: emergencia, ansiedade_extrema, cianose, pieira, febre, olfato_paladar, tosse_cronica, pieira_intensa, palpitacoes_graves, tosse_sangue, inchaco_face_labios)
+  ... e mais 5 padrões aprendidos.

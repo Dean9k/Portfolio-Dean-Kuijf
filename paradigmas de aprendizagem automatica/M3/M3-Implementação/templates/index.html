@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <title>Previsão de Preço Airbnb NYC</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #99CCFF, #99CCFF);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            margin-top: 60px;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #3399FF;
+            outline: none;
+            box-shadow: 0 0 4px #4169E1;
+        }
+
+        button {
+            width: 100%;
+            background-color: #3399FF;
+            color: white;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #4169E1;
+            transform: scale(1.03);
+        }
+
+        #resultado {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #E6F5FF;
+            color: #071642;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            border-left: 5px solid #286AA7;
+        }
+
+        .mensagem-erro {
+            color: #dc3545;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .mensagem-status {
+            color: #28a745;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .icon-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .icon-label i {
+            color: #3399FF;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-dollar-sign"></i> Airbnb NYC Price Prediction </h1>
+
+        <form action="/" method="POST">
+            <div class="form-group">
+                <label class="icon-label"><i class="fas fa-bed"></i> Room Type</label>
+                <select name="tipo_quarto" required>
+                    <option value="Entire home/apt">Entire Home/ Apartment</option>
+                    <option value="Private room">Private Room</option>
+                    <option value="Shared room">Shared Room</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="icon-label"><i class="fas fa-map-marker-alt"></i> Neighbourhood Group</label>
+                <select name="bairro" required>
+                    <option value="Manhattan">Manhattan</option>
+                    <option value="Brooklyn">Brooklyn</option>
+                    <option value="Queens">Queens</option>
+                    <option value="Bronx">Bronx</option>
+                    <option value="Staten Island">Staten Island</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="icon-label"><i class="fas fa-star"></i> Number of Reviews</label>
+                <input type="number" name="numero_avaliacoes" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label class="icon-label"><i class="fas fa-calendar-check"></i> Availability in the last year (365 dias) </label>
+                <input type="number" name="disponibilidade" min="0" max="365" required>
+            </div>
+
+            <div class="form-group">
+                <label class="icon-label"><i class="fas fa-moon"></i> Minimum of Nights </label>
+                <input type="number" name="noites_minimas" min="1" required>
+            </div>
+
+            <div class="form-group">
+                <label class="icon-label"><i class="fas fa-shield-alt"></i> Serious crimes recorded last year </label>
+                <input type="number" name="crimes_graves" min="0" required>
+            </div>
+
+            <div class="form-group">
+                <label class="icon-label"><i class="fas fa-landmark"></i> Number of attractions less than 2 kilometers </label>
+                <input type="number" name="atracoes" min="0" required>
+            </div>
+
+            <button type="submit"><i class="fas fa-magic"></i> Predict Price </button>
+        </form>
+
+        {% if preco_previsto %}
+        <div id="resultado">
+            <i class="fas fa-dollar-sign"></i> Predicted Price: {{ preco_previsto }}
+        </div>
+        {% endif %}
+
+        {% if mensagem_erro %}
+        <div class="mensagem-erro">{{ mensagem_erro }}</div>
+        {% endif %}
+
+        {% if mensagem_status %}
+        <div class="mensagem-status">{{ mensagem_status }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
